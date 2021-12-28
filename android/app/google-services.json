@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "122738671749",
+    "project_id": "memes-9e19c",
+    "storage_bucket": "memes-9e19c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122738671749:android:07fc2f0fe1c287e93ca9ec",
+        "android_client_info": {
+          "package_name": "mgk.spnw.memes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122738671749-rv1ld243nm1elj7uc8rjo2ul0ihvjqli.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmPIyfgOcwh4GSPCzAaBGaoqcUeTTbiOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122738671749-rv1ld243nm1elj7uc8rjo2ul0ihvjqli.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "122738671749-vorddil59jum3t81l1oktlvbrmbuthq0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "mgk.spnw.memes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
