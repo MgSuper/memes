@@ -52,6 +52,12 @@ class FirestoreController extends GetxController {
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
+      case PhotoTypes.OHNO:
+        Stream<QuerySnapshot> stream =
+            _photosRef.where('category', isEqualTo: 'Ohno').snapshots();
+        return stream.map((snapshot) => snapshot.docs.map((snap) {
+              return Photo.fromSnapshot(snap);
+            }).toList());
     }
   }
 }

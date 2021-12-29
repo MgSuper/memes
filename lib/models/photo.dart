@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-enum PhotoTypes { ALL, MEMES, CARTOONS, CELEBRITIES }
+enum PhotoTypes { ALL, MEMES, CARTOONS, CELEBRITIES, OHNO }
 
 class Photo extends Equatable {
   final String name;

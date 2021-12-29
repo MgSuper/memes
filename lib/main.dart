@@ -4,10 +4,10 @@ import 'package:memes/constants/firebase_constant.dart';
 import 'package:memes/controllers/auth_controller.dart';
 import 'package:memes/screens/screens.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   firebaseInitialization.then((value) async {
-    await Get.put(AuthController());
+    Get.put(AuthController());
   });
   runApp(const MyApp());
 }
@@ -23,20 +23,35 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Image(
-                image: AssetImage('assets/images/let_laugh.png'),
-                width: 125,
-                height: 125,
-              ),
-            ),
-          ],
+      // unknownRoute: GetPage(name: '/notfound', page: () => UnknownScreen()),
+      home: SplashScreen(),
+      getPages: [
+        GetPage(
+          name: '/home',
+          page: () => HomeScreen(),
         ),
-      ),
+        GetPage(
+          name: '/login',
+          page: () => LoginScreen(),
+        ),
+        GetPage(
+          name: '/detail',
+          page: () => DetailScreen(),
+        ),
+        GetPage(
+          name: '/profile',
+          page: () => ProfileScreen(),
+        ),
+      ],
+      // routingCallback: (routing) {
+      //   if (routing!.current == '/detail') {
+      //     openAds();
+      //   }
+      // },
     );
+  }
+
+  openAds() {
+    Get.snackbar('Ads', 'Ads Will Open');
   }
 }

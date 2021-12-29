@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:memes/controllers/auth_controller.dart';
+
 import 'package:memes/controllers/firebase_controller.dart';
-import 'package:memes/controllers/test_controller.dart';
-import 'package:memes/screens/screens.dart';
 import 'package:memes/controllers/chip_controller.dart';
 import 'package:memes/models/photo.dart';
 
 class HomeScreen extends StatelessWidget {
-  final TestController c = Get.put(TestController());
-
   final FirestoreController firestoreController =
       Get.put(FirestoreController());
   final ChipController chipController = Get.put(ChipController());
@@ -19,7 +15,8 @@ class HomeScreen extends StatelessWidget {
     'SHOW ALL',
     'MEMES',
     'CARTOONS',
-    'CELEBRITIES'
+    'CELEBRITIES',
+    'OHNO',
   ];
   @override
   Widget build(BuildContext context) {
@@ -31,9 +28,10 @@ class HomeScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 // this icon button is for the user to signout
-                AuthController.authInstance.signOut();
+                // AuthController.authInstance.signOut();
+                Get.toNamed('/profile');
               },
-              icon: const Icon(Icons.logout))
+              icon: const Icon(Icons.person))
         ],
       ),
       body: Padding(
@@ -48,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Wrap(
                       spacing: 5.0,
-                      children: List<Widget>.generate(4, (int index) {
+                      children: List<Widget>.generate(5, (int index) {
                         return ChoiceChip(
                           label: Text(_chipLabel[index]),
                           selected: chipController.selectedChip == index,
@@ -88,8 +86,11 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            _displayDialog(
-                                context, firestoreController.photoList[index]);
+                            // _displayDialog(
+                            //     context, firestoreController.photoList[index]);
+                            Get.toNamed('/detail',
+                                arguments:
+                                    firestoreController.photoList[index]);
                           },
                           child: Image.network(
                             firestoreController.photoList[index].imageUrl,
