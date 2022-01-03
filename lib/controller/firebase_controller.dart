@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get.dart';
-import 'package:memes/controllers/chip_controller.dart';
+import 'package:memes/controller/chip_controller.dart';
 import 'package:memes/models/photo.dart';
 
 class FirestoreController extends GetxController {

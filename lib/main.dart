@@ -1,57 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/controllers/auth_controller.dart';
-import 'package:memes/screens/screens.dart';
+import 'package:memes/controller/auth_controller.dart';
+import 'package:memes/controllerBindings.dart';
+import 'package:memes/screens/splash/splash_screen.dart';
 
-void main() {
+void main() async {
+  // Firebase init
   WidgetsFlutterBinding.ensureInitialized();
-  firebaseInitialization.then((value) async {
+  await firebaseInitialization.then((value) async {
     Get.put(AuthController());
   });
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      // bind our app with the  Getx Controller
+      initialBinding: ControllerBindings(),
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.amaranthTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
-      // unknownRoute: GetPage(name: '/notfound', page: () => UnknownScreen()),
       home: SplashScreen(),
-      getPages: [
-        GetPage(
-          name: '/home',
-          page: () => HomeScreen(),
-        ),
-        GetPage(
-          name: '/login',
-          page: () => LoginScreen(),
-        ),
-        GetPage(
-          name: '/detail',
-          page: () => DetailScreen(),
-        ),
-        GetPage(
-          name: '/profile',
-          page: () => ProfileScreen(),
-        ),
-      ],
-      // routingCallback: (routing) {
-      //   if (routing!.current == '/detail') {
-      //     openAds();
-      //   }
-      // },
     );
-  }
-
-  openAds() {
-    Get.snackbar('Ads', 'Ads Will Open');
   }
 }

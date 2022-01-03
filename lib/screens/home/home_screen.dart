@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:memes/constants/color.dart';
 
-import 'package:memes/controllers/firebase_controller.dart';
-import 'package:memes/controllers/chip_controller.dart';
+import 'package:memes/controller/firebase_controller.dart';
+import 'package:memes/controller/chip_controller.dart';
 import 'package:memes/models/photo.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,18 +23,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double widthValue = MediaQuery.of(context).size.width / 2.2;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Memes'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                // this icon button is for the user to signout
-                // AuthController.authInstance.signOut();
-                Get.toNamed('/profile');
-              },
-              icon: const Icon(Icons.person))
-        ],
-      ),
+      backgroundColor: kBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -151,38 +141,6 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  _displayDialog(BuildContext context, photoDetail) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      transitionDuration: Duration(milliseconds: 500),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: animation,
-            child: child,
-          ),
-        );
-      },
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Hero(
-            tag: photoDetail.name,
-            child: Image.network(
-              photoDetail.imageUrl,
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-            ),
-          ),
-        );
-      },
     );
   }
 }
