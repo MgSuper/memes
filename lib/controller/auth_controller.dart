@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/screens/screens.dart';
+import 'package:memes/screens/bottom_tab_bar/bottom_tab_bar.dart';
 import 'package:get/get.dart';
+import 'package:memes/screens/sign_in/sign_in.dart';
 
 class AuthController extends GetxController {
   static AuthController authInstance = Get.find();
   late Rx<User?> firebaseUser;
+
+  // User? get userProfile => auth.currentUser;
 
   @override
   void onReady() {
@@ -17,19 +20,21 @@ class AuthController extends GetxController {
   }
 
   _setInitialScreen(User? user) {
+    print(user);
     if (user != null) {
       // user is logged in
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => BottomTabBar());
     } else {
       // user is null as in user is not available or not logged in
-      Get.offAll(() => LoginScreen());
+      Get.offAll(() => const SignIn());
     }
   }
 
-  void register(String email, String password) async {
+  void register(String name, String email, String password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => auth.currentUser!.updateDisplayName(name));
     } on FirebaseAuthException catch (e) {
       // this is solely for the Firebase Auth Exception
       // for example : password did not match
