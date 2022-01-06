@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/controller/auth_controller.dart';
+import 'package:memes/controllers/auth_controller.dart';
 import 'package:memes/controllerBindings.dart';
 import 'package:memes/screens/splash/splash_screen.dart';
 

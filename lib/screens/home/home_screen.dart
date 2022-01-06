@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/color.dart';
 
-import 'package:memes/controller/firebase_controller.dart';
-import 'package:memes/controller/chip_controller.dart';
+import 'package:memes/controllers/firestore_controller.dart';
+import 'package:memes/controllers/chip_controller.dart';
 import 'package:memes/models/photo.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:memes/screens/view_photo/view_photo.dart';
+import 'package:photo_view/photo_view.dart';
 
 class HomeScreen extends StatelessWidget {
   final FirestoreController firestoreController =
@@ -78,13 +81,35 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             // _displayDialog(
                             //     context, firestoreController.photoList[index]);
-                            Get.toNamed('/detail',
-                                arguments:
-                                    firestoreController.photoList[index]);
+                            // Get.toNamed('/detail',
+                            //     arguments:
+                            //         firestoreController.photoList[index]);
+                            Get.to(() => const ViewPhoto(),
+                                arguments: {
+                                  'image': firestoreController
+                                      .photoList[index].imageUrl
+                                },
+                                transition: Transition.fadeIn);
                           },
-                          child: Image.network(
-                            firestoreController.photoList[index].imageUrl,
-                            fit: BoxFit.cover,
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                firestoreController.photoList[index].imageUrl,
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.grey,
+                                    BlendMode.colorBurn,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) => Center(
+                                child: const CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
                         ),
                         Positioned(
@@ -112,13 +137,6 @@ class HomeScreen extends StatelessWidget {
                                             color: Colors.white,
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Icon(
-                                          Icons.favorite,
-                                          color: Colors.white,
-                                        ),
                                       ),
                                     ],
                                   ),

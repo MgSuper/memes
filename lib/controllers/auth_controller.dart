@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
@@ -31,7 +32,21 @@ class AuthController extends GetxController {
 
   void register(String name, String email, String password) async {
     try {
-      await auth.createUserWithEmailAndPassword(email: email, password: password).then((value) => auth.currentUser!.updateDisplayName(name));
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        auth.currentUser!.updateDisplayName(name);
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .set({
+          'name': name,
+          'email': auth.currentUser!.email,
+          'creation_time': auth.currentUser!.metadata.creationTime,
+          'point': 0,
+          'rank': 'Newbie',
+        });
+      });
     } on FirebaseAuthException catch (e) {
       // this is solely for the Firebase Auth Exception
       // for example : password did not match

@@ -48,8 +48,8 @@ class _BottomTabBarState extends State<BottomTabBar> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.collections),
-                label: 'Collection',
+                icon: Icon(Icons.run_circle),
+                label: 'Ranks',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

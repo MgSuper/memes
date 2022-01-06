@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:memes/controller/auth_controller.dart';
+import 'package:memes/controllers/auth_controller.dart';
 import 'package:memes/screens/sign_in/sign_in.dart';
 import 'package:memes/widgets/rounded_elevated_button.dart';
 import 'package:memes/widgets/text_with_textbutton.dart';

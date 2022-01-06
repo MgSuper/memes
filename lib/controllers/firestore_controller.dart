@@ -1,31 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:memes/controller/chip_controller.dart';
-import 'package:memes/models/photo.dart';
+import 'package:memes/constants/firebase_constant.dart';
+import 'package:memes/controllers/chip_controller.dart';
+import 'package:memes/models/models.dart';
 
 class FirestoreController extends GetxController {
   //referance to firestore collection here laptop is collection name
-  final CollectionReference _photosRef =
-      FirebaseFirestore.instance.collection('memes');
+  final CollectionReference _photosRef = firebaseFirestore.collection('memes');
+  final CollectionReference _usersRef = firebaseFirestore.collection('users');
+  final DocumentReference _currentUserRef =
+      firebaseFirestore.collection('users').doc(auth.currentUser!.uid);
 
   var photoList = <Photo>[].obs;
+  var userList = <User>[].obs;
 
   //dependency injection with getx
   ChipController _chipController = Get.put(ChipController());
 
   @override
   void onInit() {
-    //binding to stream so that we can listen to realtime cahnges
+    //binding to stream so that we can listen to realtime changes
 
     photoList
         .bindStream(getPhotos(PhotoTypes.values[_chipController.selectedChip]));
+    userList.bindStream(getUsers());
     super.onInit();
   }
 
-// this fuction retuns stream of laptop lsit from firestore
+// this fuction retuns stream of Memes from firestore
 
   Stream<List<Photo>> getPhotos(PhotoTypes brand) {
-    //using enum class LaptopBrand in switch case
+    // using enum class PhotoType in switch case
     switch (brand) {
       case PhotoTypes.ALL:
         Stream<QuerySnapshot> stream = _photosRef.snapshots();
@@ -38,7 +43,6 @@ class FirestoreController extends GetxController {
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
-
       case PhotoTypes.CARTOONS:
         Stream<QuerySnapshot> stream =
             _photosRef.where('category', isEqualTo: 'Cartoons').snapshots();
@@ -58,5 +62,12 @@ class FirestoreController extends GetxController {
               return Photo.fromSnapshot(snap);
             }).toList());
     }
+  }
+
+  Stream<List<User>> getUsers() {
+    Stream<QuerySnapshot> stream = _usersRef.snapshots();
+    return stream.map((snapshot) => snapshot.docs.map((snap) {
+          return User.fromSnapshot(snap);
+        }).toList());
   }
 }
