@@ -11,33 +11,48 @@ class CollectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Rank List",
-                style: TextStyle(fontSize: 20),
-              ),
-              Obx(
-                () => Expanded(
-                  child: ListView.builder(
-                    itemCount: firestoreController.userList.length,
-                    itemBuilder: (context, index) {
-                      print(firestoreController.userList[index].name);
-                      return ListTile(
-                        title: Text(firestoreController.userList[index].name),
-                        subtitle:
-                            Text(firestoreController.userList[index].point),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+      backgroundColor: Colors.white,
+      body:
+          // Obx(
+          //   () => Expanded(
+          //     child: ListView.builder(
+          //       itemCount: firestoreController.userList.length,
+          //       itemBuilder: (context, index) {
+          //         print(firestoreController.userList[index].name);
+          //         return ListTile(
+          //           title: Text(firestoreController.userList[index].name),
+          //           subtitle:
+          //               Text(firestoreController.userList[index].point),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+          ListView(
+        padding: const EdgeInsets.all(8),
+        children: <Widget>[
+          Text('User Ranks'),
+          ListTile(
+            title: Text("Battery Full"),
+            subtitle: Text("The battery is full."),
+            leading: CircleAvatar(child: Text('AH')),
           ),
-        ),
+          ListTile(
+            title: Text("Anchor"),
+            subtitle: Text("Lower the anchor."),
+            leading: CircleAvatar(child: Text('AH')),
+          ),
+          ListTile(
+            title: Text("Alarm"),
+            subtitle: Text("This is the time."),
+            leading: CircleAvatar(child: Text('AH')),
+          ),
+          ListTile(
+            title: Text("Ballot"),
+            subtitle: Text("Cast your vote."),
+            leading: CircleAvatar(child: Text('AH')),
+          )
+        ],
       ),
     );
   }

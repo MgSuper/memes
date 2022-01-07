@@ -43,8 +43,9 @@ class AuthController extends GetxController {
           'name': name,
           'email': auth.currentUser!.email,
           'creation_time': auth.currentUser!.metadata.creationTime,
-          'point': 0,
+          'point': '0',
           'rank': 'Newbie',
+          'isDarkMode': false,
         });
       });
     } on FirebaseAuthException catch (e) {
