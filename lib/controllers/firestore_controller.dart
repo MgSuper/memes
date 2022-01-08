@@ -7,9 +7,8 @@ import 'package:memes/models/models.dart';
 class FirestoreController extends GetxController {
   //referance to firestore collection here laptop is collection name
   final CollectionReference _photosRef = firebaseFirestore.collection('memes');
-  final CollectionReference _usersRef = firebaseFirestore.collection('users');
-  final DocumentReference _currentUserRef =
-      firebaseFirestore.collection('users').doc(auth.currentUser!.uid);
+  final CollectionReference usersRef = firebaseFirestore.collection('users');
+  final DocumentReference currentUserRef = firebaseFirestore.collection('users').doc(auth.currentUser!.uid);
 
   var photoList = <Photo>[].obs;
   var userList = <User>[].obs;
@@ -21,8 +20,7 @@ class FirestoreController extends GetxController {
   void onInit() {
     //binding to stream so that we can listen to realtime changes
 
-    photoList
-        .bindStream(getPhotos(PhotoTypes.values[_chipController.selectedChip]));
+    photoList.bindStream(getPhotos(PhotoTypes.values[_chipController.selectedChip]));
     userList.bindStream(getUsers());
     super.onInit();
   }
@@ -38,26 +36,22 @@ class FirestoreController extends GetxController {
               return Photo.fromSnapshot(snap);
             }).toList());
       case PhotoTypes.MEMES:
-        Stream<QuerySnapshot> stream =
-            _photosRef.where('category', isEqualTo: 'Memes').snapshots();
+        Stream<QuerySnapshot> stream = _photosRef.where('category', isEqualTo: 'Memes').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
       case PhotoTypes.CARTOONS:
-        Stream<QuerySnapshot> stream =
-            _photosRef.where('category', isEqualTo: 'Cartoons').snapshots();
+        Stream<QuerySnapshot> stream = _photosRef.where('category', isEqualTo: 'Cartoons').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
       case PhotoTypes.CELEBRITIES:
-        Stream<QuerySnapshot> stream =
-            _photosRef.where('category', isEqualTo: 'Celebrities').snapshots();
+        Stream<QuerySnapshot> stream = _photosRef.where('category', isEqualTo: 'Celebrities').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
       case PhotoTypes.OHNO:
-        Stream<QuerySnapshot> stream =
-            _photosRef.where('category', isEqualTo: 'Ohno').snapshots();
+        Stream<QuerySnapshot> stream = _photosRef.where('category', isEqualTo: 'Ohno').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
@@ -65,7 +59,7 @@ class FirestoreController extends GetxController {
   }
 
   Stream<List<User>> getUsers() {
-    Stream<QuerySnapshot> stream = _usersRef.snapshots();
+    Stream<QuerySnapshot> stream = usersRef.snapshots();
     return stream.map((snapshot) => snapshot.docs.map((snap) {
           print(snap);
           return User.fromSnapshot(snap);

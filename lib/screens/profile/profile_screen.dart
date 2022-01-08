@@ -1,12 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memes/controllers/auth_controller.dart';
+import 'package:memes/controllers/firestore_controller.dart';
 import 'package:memes/controllers/theme_controller.dart';
 import 'package:memes/theme/theme.dart';
 
 class ProfileScreen extends StatelessWidget {
   final themeController = Get.find<ThemeController>();
+  final FirestoreController firestoreController = Get.put(FirestoreController());
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     Get.put(ThemeController());
@@ -34,11 +40,32 @@ class ProfileScreen extends StatelessWidget {
                         }
                       },
                       icon: Icon(CupertinoIcons.moon_stars)),
-                  IconButton(
-                      onPressed: () => AuthController.authInstance.signOut(),
-                      icon: Icon(Icons.logout)),
+                  IconButton(onPressed: () => AuthController.authInstance.signOut(), icon: Icon(Icons.logout)),
                 ],
               ),
+            ),
+            Container(
+              height: 100,
+              child: StreamBuilder<DocumentSnapshot>(
+                  stream: firestoreController.usersRef.doc(user!.uid).snapshots(),
+                  builder: (b, streamSnapshot) {
+                    return (streamSnapshot.connectionState == ConnectionState.waiting || !streamSnapshot.hasData || !streamSnapshot.data!.exists)
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1,
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              Text(streamSnapshot.data!['name']),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text('Points', style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.02)),
+                              Text(streamSnapshot.data!['points']),
+                            ],
+                          );
+                  }),
             ),
             Image(
               image: AssetImage('assets/images/let_laugh.png'),
@@ -70,19 +97,13 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text('Points',
-                          style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02)),
+                      Text('Points', style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.02)),
                       Text('0'),
                     ],
                   ),
                   Column(
                     children: [
-                      Text('Rank',
-                          style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02)),
+                      Text('Rank', style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.02)),
                       Text('Newbie'),
                     ],
                   ),

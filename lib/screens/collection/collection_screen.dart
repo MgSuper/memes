@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/color.dart';
@@ -7,8 +6,7 @@ import 'package:memes/screens/profile/profile_controller.dart';
 
 class CollectionScreen extends StatelessWidget {
   final ProfileController controller = Get.put(ProfileController());
-  final FirestoreController firestoreController =
-      Get.put(FirestoreController());
+  final FirestoreController firestoreController = Get.put(FirestoreController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +32,7 @@ class CollectionScreen extends StatelessWidget {
                     return Card(
                       child: ListTile(
                         title: Text(firestoreController.userList[index].name),
-                        subtitle:
-                            Text(firestoreController.userList[index].point),
+                        subtitle: Text(firestoreController.userList[index].point),
                         leading: Text(index.toString()),
                       ),
                     );

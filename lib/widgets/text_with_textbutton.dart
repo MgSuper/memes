@@ -15,23 +15,18 @@ class TextWithTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 1,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.005),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(text!),
-            TextButton(
-              child: Text(textButtonText!),
-              onPressed: onPressed,
-              style: ButtonStyle(
-                overlayColor: MaterialStateColor.resolveWith(
-                    (states) => Colors.transparent),
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(text!),
+          TextButton(
+            child: Text(textButtonText!),
+            onPressed: onPressed,
+            style: ButtonStyle(
+              overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

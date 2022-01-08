@@ -27,6 +27,7 @@ class SignInButtons extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           RoundedElevatedButton(
@@ -39,10 +40,7 @@ class SignInButtons extends StatelessWidget {
                 AuthController.authInstance.login(email, password);
               }
             },
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.4,
-              vertical: MediaQuery.of(context).size.height * 0.02,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 15),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.01),
           TextWithTextButton(

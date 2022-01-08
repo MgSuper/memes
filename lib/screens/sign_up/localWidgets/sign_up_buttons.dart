@@ -30,6 +30,7 @@ class SignUpButtons extends StatelessWidget {
     return Expanded(
       flex: 4,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -43,10 +44,7 @@ class SignUpButtons extends StatelessWidget {
               }
             },
             title: 'Sign up',
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.38,
-              vertical: MediaQuery.of(context).size.height * 0.02,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 15),
           ),
           TextWithTextButton(
             text: 'Already have an account?',
