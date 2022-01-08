@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:memes/constants/color.dart';
+import 'package:get/get.dart';
 import 'package:memes/controllers/auth_controller.dart';
-import 'package:memes/widgets/hero_title.dart';
-import 'package:memes/widgets/rounded_elevated_button.dart';
+import 'package:memes/controllers/theme_controller.dart';
+import 'package:memes/theme/theme.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final themeController = Get.find<ThemeController>();
   @override
   Widget build(BuildContext context) {
+    Get.put(ThemeController());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -20,7 +22,18 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {}, icon: Icon(CupertinoIcons.moon_stars)),
+                      onPressed: () {
+                        if (Get.isDarkMode) {
+                          // themeController.changeThemeMode(ThemeMode.light);
+                          themeController.changeTheme(Themes.lightTheme);
+                          themeController.saveTheme(false);
+                        } else {
+                          // themeController.changeThemeMode(ThemeMode.dark);
+                          themeController.changeTheme(Themes.darkTheme);
+                          themeController.saveTheme(true);
+                        }
+                      },
+                      icon: Icon(CupertinoIcons.moon_stars)),
                   IconButton(
                       onPressed: () => AuthController.authInstance.signOut(),
                       icon: Icon(Icons.logout)),

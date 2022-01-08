@@ -67,6 +67,7 @@ class FirestoreController extends GetxController {
   Stream<List<User>> getUsers() {
     Stream<QuerySnapshot> stream = _usersRef.snapshots();
     return stream.map((snapshot) => snapshot.docs.map((snap) {
+          print(snap);
           return User.fromSnapshot(snap);
         }).toList());
   }
