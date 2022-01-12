@@ -40,6 +40,7 @@ class AuthController extends GetxController {
             .collection('users')
             .doc(auth.currentUser!.uid)
             .set({
+          'user_id': auth.currentUser!.uid,
           'name': name,
           'email': auth.currentUser!.email,
           'creation_time': auth.currentUser!.metadata.creationTime,

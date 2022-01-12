@@ -25,7 +25,7 @@ class HeroTitle extends StatelessWidget {
               style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.1,
                 // fontWeight: FontWeight.bold,
-                color: kPrimaryColor,
+                // color: kPrimaryColor,
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.005),

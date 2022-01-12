@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/hero_image.dart';
+import 'package:memes/widgets/widgets.dart';
 import 'localWidgets/sign_in_form.dart';
-import '../../widgets/hero_title.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);

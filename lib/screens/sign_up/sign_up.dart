@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memes/constants/color.dart';
-import 'package:memes/widgets/hero_title.dart';
-import 'package:memes/widgets/rounded_text_formfield.dart';
+import 'package:memes/widgets/widgets.dart';
 import 'localWidgets/sign_up_buttons.dart';
 
 class SignUp extends StatefulWidget {
@@ -20,7 +18,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      // backgroundColor: kBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(

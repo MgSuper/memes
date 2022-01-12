@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:memes/constants/color.dart';
 
 class RoundedElevatedButton extends StatelessWidget {
   const RoundedElevatedButton({
@@ -22,7 +21,6 @@ class RoundedElevatedButton extends StatelessWidget {
       ),
       style: ElevatedButton.styleFrom(
         padding: padding,
-        primary: kPrimaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

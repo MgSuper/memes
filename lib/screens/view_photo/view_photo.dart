@@ -34,19 +34,19 @@ class ViewPhoto extends StatelessWidget {
             ),
             Positioned(
               left: 10,
-              top: 10,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Get.offAll(() => BottomTabBar(),
-                            transition: Transition.fadeIn);
-                      })
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Get.offAll(() => BottomTabBar(),
+                          transition: Transition.fadeIn);
+                    },
+                  ),
                 ],
               ),
             )

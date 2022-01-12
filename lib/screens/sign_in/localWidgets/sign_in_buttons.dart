@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memes/controllers/auth_controller.dart';
 import 'package:memes/screens/sign_up/sign_up.dart';
-import 'package:memes/widgets/rounded_elevated_button.dart';
-import 'package:memes/widgets/text_with_textbutton.dart';
+import 'package:memes/widgets/widgets.dart';
 
 class SignInButtons extends StatelessWidget {
   const SignInButtons({
@@ -22,8 +21,6 @@ class SignInButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final _authController = Get.find<AuthController>();
-
     return Expanded(
       flex: 1,
       child: Column(

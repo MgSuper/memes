@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:memes/constants/color.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:memes/controllers/controllers.dart';
 import 'package:memes/screens/bottom_tab_bar/bottom_tab_bar_controller.dart';
-import 'package:memes/screens/collection/collection_screen.dart';
+import 'package:memes/screens/user_ranks/user_ranks.dart';
 import 'package:memes/screens/home/home_screen.dart';
 import 'package:memes/screens/profile/profile_screen.dart';
 
@@ -12,10 +13,11 @@ class BottomTabBar extends StatefulWidget {
 }
 
 class _BottomTabBarState extends State<BottomTabBar> {
+  final AdController _adController = Get.put(AdController());
   int _currentIndex = 0;
   List<Widget> currentTab = [
     HomeScreen(),
-    CollectionScreen(),
+    UserRanksScreen(),
     ProfileScreen(),
   ];
 
@@ -27,19 +29,53 @@ class _BottomTabBarState extends State<BottomTabBar> {
       init: BottomTabBarController(),
       builder: (controller) {
         return Scaffold(
+          floatingActionButton: _adController.isRewardedAdReady == true
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Need a hint?'),
+                          content: Text('Watch an Ad to get a hint!'),
+                          actions: [
+                            TextButton(
+                              child: Text('cancel'.toUpperCase()),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            TextButton(
+                              child: Text('ok'.toUpperCase()),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                _adController.rewardedAd.show(
+                                    onUserEarnedReward:
+                                        (RewardedAd ad, RewardItem reward) {});
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  label: Text('Point'),
+                  icon: Icon(Icons.card_giftcard),
+                )
+              : null,
           body: SafeArea(
             child: IndexedStack(
               index: controller.tabIndex,
               children: [
                 HomeScreen(),
-                CollectionScreen(),
+                UserRanksScreen(),
                 ProfileScreen(),
               ],
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             elevation: 0,
-            backgroundColor: kBackgroundColor,
+            // backgroundColor: kBackgroundColor,
             currentIndex: controller.tabIndex,
             onTap: controller.changeTabIndex,
             items: <BottomNavigationBarItem>[

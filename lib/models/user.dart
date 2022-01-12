@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
+  final String user_id;
   final String name;
   final String email;
   final Timestamp creation_time;
@@ -10,7 +11,8 @@ class User extends Equatable {
   final bool is_dark_theme;
 
   User(
-      {required this.name,
+      {required this.user_id,
+      required this.name,
       required this.email,
       required this.creation_time,
       required this.point,
@@ -20,11 +22,12 @@ class User extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props =>
-      [name, email, creation_time, point, rank, is_dark_theme];
+      [user_id, name, email, creation_time, point, rank, is_dark_theme];
 
   static User fromSnapshot(DocumentSnapshot snapshot) {
     print(snapshot);
     User user = User(
+      user_id: snapshot['user_id'],
       name: snapshot['name'],
       email: snapshot['email'],
       creation_time: snapshot['creation_time'],
