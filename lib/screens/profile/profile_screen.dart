@@ -101,7 +101,8 @@ class ProfileScreen extends StatelessWidget {
                                         fontSize:
                                             MediaQuery.of(context).size.height *
                                                 0.02)),
-                                Text(firestoreController.userList[index].point),
+                                Text(firestoreController.userList[index].point
+                                    .toString()),
                               ],
                             ),
                             Column(

@@ -1,68 +1,43 @@
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:memes/controllers/controllers.dart';
 import 'package:memes/helper/ad_helper.dart';
 
 const int maxFailedLoadAttempt = 3;
 
 class AdController extends GetxController {
+  final FirestoreController firestoreController = Get.find();
   @override
   void onInit() {
-    createBottomBannerAd();
+    super.onInit();
     loadInterstitialAd();
-    loadRewardedAd();
+    // loadBannerAd();
+    // loadRewardedAd();
   }
 
-  ///------------------  Dispose
   @override
   void onClose() {
-    bannerAd.dispose();
+    super.dispose();
+
     interstitialAd?.dispose();
-    rewardedAd.dispose();
-    super.onClose();
   }
 
-  ///----------------------------------- Banner Ad
-  late BannerAd bannerAd;
   InterstitialAd? interstitialAd;
-  late RewardedAd rewardedAd;
-
   int interstitialLoadAttempts = 0;
 
-  final isBannerLoaded = false.obs;
-  final isRewardedAdReady = false.obs;
+  // late BannerAd bannerAd;
+  // RxBool isAdLoaded = false.obs;
 
-  bool bannerAdError = false;
-  AdWidget? bannerAdWidget;
-
-  void createBottomBannerAd() {
-    bannerAd = BannerAd(
-      adUnitId: AdHelper.bannerAdUnitId,
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          isBannerLoaded.value = true;
-          update();
-          print('BAD: $isBannerLoaded');
-        },
-        onAdFailedToLoad: (ad, error) {
-          bannerAdError = false;
-          ad.dispose();
-          print('ADERROR: $error');
-          update();
-        },
-      ),
-    );
-    update();
-    bannerAd.load();
-  }
+  // RewardedAd? rewardedAd;
+  // RxBool isRewardedAdReady = false.obs;
 
   void showInterstitialAd() {
     if (interstitialAd != null) {
-      interstitialAd!.fullScreenContentCallback =
-          FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+      interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (InterstitialAd ad) {
         ad.dispose();
         loadInterstitialAd();
+        firestoreController.updatePointAndRank();
         update();
       }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError err) {
         ad.dispose();
@@ -80,8 +55,9 @@ class AdController extends GetxController {
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
-          this.interstitialAd = ad;
+          interstitialAd = ad;
           interstitialLoadAttempts = 0;
+          //
           update();
         },
         onAdFailedToLoad: (LoadAdError err) {
@@ -96,40 +72,46 @@ class AdController extends GetxController {
     );
   }
 
-  void loadRewardedAd() {
-    RewardedAd.load(
-      adUnitId: AdHelper.rewardedAdUnitId,
-      request: AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          rewardedAd = ad;
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              isRewardedAdReady.value = false;
-              update();
-              loadRewardedAd();
-            },
-          );
-          isRewardedAdReady.value = true;
-          update();
-        },
-        onAdFailedToLoad: (err) {
-          print('Failed to load a rewarded ad: ${err.message}');
-          isRewardedAdReady.value = false;
-          update();
-        },
-      ),
-    );
-  }
+  // void loadRewardedAd() {
+  //   RewardedAd.load(
+  //     adUnitId: AdHelper.rewardedAdUnitId,
+  //     request: AdRequest(),
+  //     rewardedAdLoadCallback: RewardedAdLoadCallback(
+  //       onAdLoaded: (ad) {
+  //         this.rewardedAd = ad;
 
-  /// --------------------------  Inline Banner Ad
-  // final adIndex = 2;
+  //         ad.fullScreenContentCallback = FullScreenContentCallback(
+  //           onAdDismissedFullScreenContent: (ad) {
+  //             isRewardedAdReady.value = false;
+  //             firestoreController.updatePoint();
+  //             update();
+  //             loadRewardedAd();
+  //           },
+  //         );
+  //         isRewardedAdReady.value = true;
+  //         update();
+  //       },
+  //       onAdFailedToLoad: (err) {
+  //         print('Failed to load a rewarded ad: ${err.message}');
+  //         isRewardedAdReady.value = false;
+  //         update();
+  //       },
+  //     ),
+  //   );
+  // }
 
-  //
-  // int getDestinationItemIndex({int? rawIndex}) {
-  //   if (rawIndex! >= adIndex && isBannerLoaded.value) {
-  //     return rawIndex - 1;
-  //   }
-  //   return rawIndex;
+  // loadBannerAd() {
+  //   bannerAd = BannerAd(
+  //       size: AdSize.banner,
+  //       adUnitId: AdHelper.bannerAdUnitId,
+  //       listener: BannerAdListener(
+  //           onAdLoaded: (ad) {
+  //             isAdLoaded.value = true;
+  //             update();
+  //           },
+  //           onAdFailedToLoad: (ad, error) {}),
+  //       request: AdRequest());
+  //   update();
+  //   bannerAd.load();
   // }
 }

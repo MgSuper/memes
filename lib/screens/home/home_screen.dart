@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:memes/controllers/controllers.dart';
+import 'package:memes/helper/ad_helper.dart';
 import 'package:memes/models/photo.dart';
 import 'package:memes/screens/view_photo/view_photo.dart';
 
@@ -10,10 +11,8 @@ class HomeScreen extends StatelessWidget {
   @override
   final FirestoreController firestoreController =
       Get.put(FirestoreController());
-
   final ChipController chipController = Get.put(ChipController());
-
-  final AdController _adController = Get.put(AdController());
+  final AdController _adController = Get.find();
 
   final List<String> _chipLabel = [
     'SHOW ALL',
@@ -26,27 +25,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double widthValue = MediaQuery.of(context).size.width / 2.2;
     return Scaffold(
-      persistentFooterButtons: [
-        _adController.isBannerLoaded == true
-            ? Container(
-                child: AdWidget(ad: _adController.bannerAd),
-                width: _adController.bannerAd.size.width.toDouble(),
-                height: _adController.bannerAd.size.height.toDouble(),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            : Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-      ],
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -137,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                           left: 0,
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
-                            height: 40,
+                            height: 50,
                             decoration: BoxDecoration(
                                 // borderRadius: BorderRadius.only(
                                 //     bottomLeft: Radius.circular(20),

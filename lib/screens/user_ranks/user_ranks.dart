@@ -36,7 +36,8 @@ class UserRanksScreen extends StatelessWidget {
                             title: firestoreController.userList[index].name,
                             sub_title: firestoreController.userList[index].rank,
                             index: index,
-                            trailing: firestoreController.userList[index].point,
+                            trailing: firestoreController.userList[index].point
+                                .toString(),
                             rank_color: Colors.amber[600]),
                       );
                     } else if (index == 1) {
@@ -45,7 +46,8 @@ class UserRanksScreen extends StatelessWidget {
                             title: firestoreController.userList[index].name,
                             sub_title: firestoreController.userList[index].rank,
                             index: index,
-                            trailing: firestoreController.userList[index].point,
+                            trailing: firestoreController.userList[index].point
+                                .toString(),
                             rank_color: Colors.grey[600]),
                       );
                     } else if (index == 2) {
@@ -54,7 +56,8 @@ class UserRanksScreen extends StatelessWidget {
                             title: firestoreController.userList[index].name,
                             sub_title: firestoreController.userList[index].rank,
                             index: index,
-                            trailing: firestoreController.userList[index].point,
+                            trailing: firestoreController.userList[index].point
+                                .toString(),
                             rank_color: Colors.brown[600]),
                       );
                     } else if (index > 2) {
@@ -63,7 +66,8 @@ class UserRanksScreen extends StatelessWidget {
                             title: firestoreController.userList[index].name,
                             sub_title: firestoreController.userList[index].rank,
                             index: index,
-                            trailing: firestoreController.userList[index].point,
+                            trailing: firestoreController.userList[index].point
+                                .toString(),
                             rank_color: null),
                       );
                     } else {

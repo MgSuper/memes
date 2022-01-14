@@ -17,7 +17,7 @@ class ControllerBindings extends Bindings {
     Get.lazyPut<ProfileController>(() => ProfileController());
     Get.lazyPut<UserRanksController>(() => UserRanksController());
     Get.lazyPut<ChipController>(() => ChipController());
-    Get.lazyPut<FirestoreController>(() => FirestoreController());
+    Get.put(FirestoreController());
     Get.put(AdController());
   }
 }

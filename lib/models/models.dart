@@ -1,2 +1,2 @@
 export 'photo.dart';
-export 'user.dart';
+export 'user_model.dart';
