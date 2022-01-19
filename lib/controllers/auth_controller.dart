@@ -6,10 +6,7 @@ import 'package:memes/screens/bottom_tab_bar/bottom_tab_bar.dart';
 import 'package:memes/screens/sign_in/sign_in.dart';
 
 class AuthController extends GetxController {
-  static AuthController authInstance = Get.find();
   late Rx<User?> firebaseUser;
-
-  // User? get userProfile => auth.currentUser;
 
   @override
   void onReady() {
@@ -22,10 +19,8 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user != null) {
-      // user is logged in
       Get.offAll(() => BottomTabBar());
     } else {
-      // user is null as in user is not available or not logged in
       Get.offAll(() => const SignIn());
     }
   }
@@ -45,7 +40,7 @@ class AuthController extends GetxController {
           'email': auth.currentUser!.email,
           'creation_time': auth.currentUser!.metadata.creationTime,
           'point': 0,
-          'rank': 'Newbie',
+          'rank': 'Ant',
         });
       });
     } on FirebaseAuthException catch (e) {
@@ -74,9 +69,17 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       // this is solely for the Firebase Auth Exception
       // for example : password did not match
-      print(e.message);
+      Get.snackbar(
+        "Error",
+        e.message!,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } catch (e) {
-      print(e.toString());
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -84,7 +87,11 @@ class AuthController extends GetxController {
     try {
       auth.signOut();
     } catch (e) {
-      print(e.toString());
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

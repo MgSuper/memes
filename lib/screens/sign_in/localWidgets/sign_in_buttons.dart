@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:memes/controllers/auth_controller.dart';
+import 'package:memes/controllers/controllers.dart';
 import 'package:memes/screens/sign_up/sign_up.dart';
 import 'package:memes/widgets/widgets.dart';
 
@@ -21,29 +21,30 @@ class SignInButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _auth = Get.find<AuthController>();
     return Expanded(
       flex: 1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-          RoundedElevatedButton(
-            title: 'Sign in',
+          TextButton(
+            child: Text('sign_in'.tr),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 String email = _emailController.text.trim();
                 String password = _passwordController.text;
-
-                AuthController.authInstance.login(email, password);
+                _auth.login(email, password);
               }
             },
-            padding: const EdgeInsets.symmetric(vertical: 15),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           TextWithTextButton(
-            text: 'Don\'t have an account?',
-            textButtonText: 'Sign up',
-            onPressed: () => Get.to(() => SignUp()),
+            text: 'no_account'.tr,
+            textButtonText: 'sign_up'.tr,
+            onPressed: () => Get.to(
+              () => SignUp(),
+            ),
           ),
         ],
       ),

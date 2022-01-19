@@ -1,24 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:memes/controllers/controllers.dart';
-import 'package:memes/helper/ad_helper.dart';
-import 'package:memes/models/photo.dart';
+import 'package:memes/models/models.dart';
 import 'package:memes/screens/view_photo/view_photo.dart';
 
 class HomeScreen extends StatelessWidget {
-  @override
-  final FirestoreController firestoreController =
-      Get.put(FirestoreController());
-  final ChipController chipController = Get.put(ChipController());
-  final AdController _adController = Get.find();
+  final _firestore = Get.find<FirestoreController>();
+  final _chip = Get.find<ChipController>();
+  final _ad = Get.find<AdController>();
 
   final List<String> _chipLabel = [
-    'SHOW ALL',
-    'MEMES',
-    'CARTOONS',
-    'CELEBRITIES',
+    'show_all',
+    'memes',
+    'cartoons',
+    'celebrities',
   ];
 
   @override
@@ -39,14 +35,13 @@ class HomeScreen extends StatelessWidget {
                       spacing: 5.0,
                       children: List<Widget>.generate(4, (int index) {
                         return ChoiceChip(
-                          label: Text(_chipLabel[index]),
-                          selected: chipController.selectedChip == index,
+                          label: Text(_chipLabel[index].tr),
+                          selected: _chip.selectedChip == index,
                           onSelected: (bool selected) {
-                            chipController.selectedChip =
-                                selected ? index : null;
-                            firestoreController.onInit();
-                            firestoreController.getPhotos(
-                                PhotoTypes.values[chipController.selectedChip]);
+                            _chip.selectedChip = selected ? index : null;
+                            _firestore.onInit();
+                            _firestore.getPhotos(
+                                PhotoTypes.values[_chip.selectedChip]);
                           },
                         );
                       }),
@@ -59,7 +54,7 @@ class HomeScreen extends StatelessWidget {
               () => Expanded(
                 child: GridView.builder(
                   padding: EdgeInsets.symmetric(vertical: 5),
-                  itemCount: firestoreController.photoList.length,
+                  itemCount: _firestore.photoList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: MediaQuery.of(context).orientation ==
                             Orientation.landscape
@@ -73,22 +68,20 @@ class HomeScreen extends StatelessWidget {
                     context,
                     index,
                   ) {
-                    return Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _adController.showInterstitialAd();
-                            Get.to(() => const ViewPhoto(),
-                                arguments: {
-                                  'image': firestoreController
-                                      .photoList[index].imageUrl
-                                },
-                                transition: Transition.fadeIn);
-                          },
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                firestoreController.photoList[index].imageUrl,
+                    return InkWell(
+                      onTap: () {
+                        _ad.showInterstitialAd();
+                        Get.to(() => const ViewPhoto(),
+                            arguments: {
+                              'image': _firestore.photoList[index].imageUrl
+                            },
+                            transition: Transition.fadeIn);
+                      },
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: _firestore.photoList[index].imageUrl,
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -108,41 +101,38 @@ class HomeScreen extends StatelessWidget {
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          left: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            height: 50,
-                            decoration: BoxDecoration(
-                                // borderRadius: BorderRadius.only(
-                                //     bottomLeft: Radius.circular(20),
-                                //     bottomRight: Radius.circular(20)),
-                                color: Colors.black.withAlpha(100)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  firestoreController.photoList[index].name,
-                                  style: TextStyle(
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withAlpha(100)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _firestore.photoList[index].name,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    _firestore.photoList[index].category,
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 10.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  firestoreController.photoList[index].category,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10.0,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                   },
                 ),

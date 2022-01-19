@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:memes/constants/style.dart';
+import 'package:memes/controllers/controllers.dart';
 import 'package:memes/screens/sign_in/localWidgets/sign_in_buttons.dart';
-import 'package:memes/widgets/widgets.dart';
+import 'package:get/get.dart';
 
 class SignInForm extends StatefulWidget {
   SignInForm({
@@ -16,20 +18,26 @@ class _SignInFormState extends State<SignInForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  final _locale = Get.find<LocaleController>();
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 5,
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            buildTextFormFields(),
-            SignInButtons(
+      flex: 4,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              buildTextFormFields(),
+              SignInButtons(
                 formKey: _formKey,
                 emailController: _emailController,
-                passwordController: _passwordController),
-          ],
+                passwordController: _passwordController,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -38,27 +46,35 @@ class _SignInFormState extends State<SignInForm> {
   Widget buildTextFormFields() {
     return Column(
       children: [
-        RoundedTextFormField(
+        TextFormField(
           controller: _emailController,
-          hintText: 'Email',
+          decoration: InputDecoration(
+            hintText: 'email'.tr,
+            hintStyle:
+                _locale.getLocale() == 'MM' ? kMyanmarFont : kEnglishFont,
+          ),
           validator: (value) {
             bool _isEmailValid = RegExp(
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                 .hasMatch(value!);
             if (!_isEmailValid) {
-              return 'Invalid email.';
+              return 'email_message'.tr;
             }
             return null;
           },
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-        RoundedTextFormField(
+        TextFormField(
           controller: _passwordController,
-          hintText: 'Password',
-          obsecureText: true,
+          decoration: InputDecoration(
+            hintText: 'password'.tr,
+            hintStyle:
+                _locale.getLocale() == 'MM' ? kMyanmarFont : kEnglishFont,
+          ),
+          obscureText: true,
           validator: (value) {
             if (value.toString().length < 6) {
-              return 'Password should be longer or equal to 6 characters.';
+              return 'password_message'.tr;
             }
             return null;
           },

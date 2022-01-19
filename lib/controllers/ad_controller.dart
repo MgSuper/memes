@@ -6,7 +6,7 @@ import 'package:memes/helper/ad_helper.dart';
 const int maxFailedLoadAttempt = 3;
 
 class AdController extends GetxController {
-  final FirestoreController firestoreController = Get.find();
+  final _firestore = Get.find<FirestoreController>();
   @override
   void onInit() {
     super.onInit();
@@ -37,7 +37,7 @@ class AdController extends GetxController {
           onAdDismissedFullScreenContent: (InterstitialAd ad) {
         ad.dispose();
         loadInterstitialAd();
-        firestoreController.updatePointAndRank();
+        _firestore.updatePointAndRank();
         update();
       }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError err) {
         ad.dispose();

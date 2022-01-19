@@ -14,8 +14,7 @@ class BottomTabBar extends StatefulWidget {
 }
 
 class _BottomTabBarState extends State<BottomTabBar> {
-  // final AdController _adController = Get.put(AdController());
-  final FirestoreController _firestoreController = Get.find();
+  final _firestore = Get.find<FirestoreController>();
   late BannerAd _bannerAd;
   bool _isAdLoaded = false;
 
@@ -56,14 +55,13 @@ class _BottomTabBarState extends State<BottomTabBar> {
       request: AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
-          this._rewardedAd = ad;
-
+          _rewardedAd = ad;
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               setState(() {
                 _isRewardedAdReady = false;
               });
-              _firestoreController.updatePointAndRank();
+              _firestore.updatePointAndRank();
               // update();
               _loadRewardedAd();
             },
@@ -163,7 +161,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
                           },
                         );
                       },
-                      label: Text('Point'),
+                      label: Text('get_point'.tr),
                       icon: Icon(Icons.card_giftcard),
                     )
                   : SizedBox(),
@@ -185,15 +183,15 @@ class _BottomTabBarState extends State<BottomTabBar> {
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: 'Home',
+                label: 'home'.tr,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.run_circle),
-                label: 'Ranks',
+                label: 'ranks'.tr,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                label: 'Profile',
+                label: 'profile'.tr,
               ),
             ],
           ),

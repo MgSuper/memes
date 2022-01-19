@@ -3,29 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/controllers/auth_controller.dart';
-import 'package:memes/controllers/firestore_controller.dart';
-import 'package:memes/controllers/theme_controller.dart';
-import 'package:memes/theme/theme.dart';
+import 'package:memes/controllers/controllers.dart';
+import 'package:memes/utils/theme/theme.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final themeController = Get.find<ThemeController>();
-  final FirestoreController firestoreController =
-      Get.put(FirestoreController());
+  final _theme = Get.find<ThemeController>();
+  final _firestore = Get.find<FirestoreController>();
+  final _auth = Get.find<AuthController>();
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ThemeController());
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: Center(
         child: Obx(
           () => ListView.builder(
-            itemCount: firestoreController.userList.length,
+            itemCount: _firestore.userList.length,
             itemBuilder: (context, index) {
-              if (firestoreController.userList[index].user_id ==
-                  auth.currentUser!.uid) {
+              if (_firestore.userList[index].user_id == auth.currentUser!.uid) {
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -39,33 +34,25 @@ class ProfileScreen extends StatelessWidget {
                                 onPressed: () {
                                   if (Get.isDarkMode) {
                                     // themeController.changeThemeMode(ThemeMode.light);
-                                    themeController
-                                        .changeTheme(Themes.lightTheme);
-                                    themeController.saveTheme(false);
+                                    _theme.changeTheme(Themes.lightTheme);
+                                    _theme.saveTheme(false);
                                   } else {
                                     // themeController.changeThemeMode(ThemeMode.dark);
-                                    themeController
-                                        .changeTheme(Themes.darkTheme);
-                                    themeController.saveTheme(true);
+                                    _theme.changeTheme(Themes.darkTheme);
+                                    _theme.saveTheme(true);
                                   }
                                 },
                                 icon: Icon(CupertinoIcons.moon_stars)),
                             IconButton(
-                                onPressed: () =>
-                                    AuthController.authInstance.signOut(),
+                                onPressed: () => _auth.signOut(),
                                 icon: Icon(Icons.logout)),
                           ],
                         ),
                       ),
-                      // Image(
-                      //   image: AssetImage('assets/images/let_laugh.png'),
-                      //   width: 150.0,
-                      //   height: 150.0,
-                      // ),
                       CircleAvatar(
                         radius: 50.0,
                         child: Text(
-                          firestoreController.userList[index].name[0],
+                          _firestore.userList[index].name[0],
                           style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.1,
                           ),
@@ -81,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        firestoreController.userList[index].name,
+                        _firestore.userList[index].name,
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.1,
                         ),
@@ -96,23 +83,23 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                Text('Points',
+                                Text('point'.tr,
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.height *
                                                 0.02)),
-                                Text(firestoreController.userList[index].point
+                                Text(_firestore.userList[index].point
                                     .toString()),
                               ],
                             ),
                             Column(
                               children: [
-                                Text('Rank',
+                                Text('rank'.tr,
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.height *
                                                 0.02)),
-                                Text(firestoreController.userList[index].rank),
+                                Text(_firestore.userList[index].rank),
                               ],
                             ),
                           ],

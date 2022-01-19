@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:memes/helper/ad_helper.dart';
 import 'package:memes/screens/bottom_tab_bar/bottom_tab_bar.dart';
 import 'package:photo_view/photo_view.dart';
 

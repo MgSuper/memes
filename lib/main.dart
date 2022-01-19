@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/controllers/auth_controller.dart';
 import 'package:memes/controllerBindings.dart';
-import 'package:memes/controllers/theme_controller.dart';
+import 'package:memes/controllers/controllers.dart';
 import 'package:memes/screens/splash/splash_screen.dart';
-import 'package:memes/theme/theme.dart';
+import 'package:memes/utils/locale/locale_string.dart';
+import 'package:memes/utils/theme/theme.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
-  // Firebase init
   WidgetsFlutterBinding.ensureInitialized();
+
   MobileAds.instance.initialize();
   await GetStorage.init();
   await firebaseInitialization.then((value) async {
@@ -23,14 +21,19 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final themeController = Get.put(ThemeController());
+  final LocaleController _locale = Get.put(LocaleController());
+  final ThemeController _theme = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // bind our app with the Getx Controller
       initialBinding: ControllerBindings(),
+      translations: LocaleString(),
+      locale: _locale.getLocale() == 'MM'
+          ? Locale('my', 'MM')
+          : Locale('en', 'US'), // Not Get.deviceLocale
+      fallbackLocale: Locale('en', 'US'),
       debugShowCheckedModeBanner: false,
-      themeMode: themeController.theme,
+      themeMode: _theme.theme,
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
       home: SplashScreen(),

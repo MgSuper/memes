@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/controllers/chip_controller.dart';
+import 'package:memes/controllers/controllers.dart';
 import 'package:memes/models/models.dart';
 
 class FirestoreController extends GetxController {
@@ -16,14 +16,12 @@ class FirestoreController extends GetxController {
   var userList = <UserModel>[].obs;
 
   //dependency injection with getx
-  ChipController _chipController = Get.put(ChipController());
+  final _chip = Get.find<ChipController>();
 
   @override
   void onInit() {
     //binding to stream so that we can listen to realtime changes
-
-    photoList
-        .bindStream(getPhotos(PhotoTypes.values[_chipController.selectedChip]));
+    photoList.bindStream(getPhotos(PhotoTypes.values[_chip.selectedChip]));
     userList.bindStream(getUsers());
     super.onInit();
   }
@@ -63,7 +61,6 @@ class FirestoreController extends GetxController {
     Stream<QuerySnapshot> stream =
         _usersRef.orderBy('point', descending: true).snapshots();
     return stream.map((snapshot) => snapshot.docs.map((snap) {
-          print(snap);
           return UserModel.fromSnapshot(snap);
         }).toList());
   }
