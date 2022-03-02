@@ -88,7 +88,9 @@ class _BottomTabBarState extends State<BottomTabBar> {
                   ? () {
                       Get.defaultDialog(
                         title: 'Reward Ad',
+                        titleStyle: const TextStyle(color: Colors.teal),
                         middleText: 'Watch an Ad to get a reward !',
+                        middleTextStyle: const TextStyle(color: Colors.black),
                         textConfirm: 'Ok',
                         textCancel: 'Cancel',
                         cancelTextColor: Colors.grey,
