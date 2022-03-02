@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/screens/bottom_tab_bar/bottom_tab_bar.dart';
-import 'package:memes/screens/sign_in/sign_in.dart';
+import 'package:memes/presentation/screens/bottom_tab_bar/bottom_tab_bar.dart';
+import 'package:memes/presentation/screens/sign_in/sign_in.dart';
 
 class AuthController extends GetxController {
   late Rx<User?> firebaseUser;
@@ -21,7 +21,7 @@ class AuthController extends GetxController {
     if (user != null) {
       Get.offAll(() => BottomTabBar());
     } else {
-      Get.offAll(() => const SignIn());
+      Get.offAll(() => SignIn());
     }
   }
 
@@ -40,21 +40,16 @@ class AuthController extends GetxController {
           'email': auth.currentUser!.email,
           'creation_time': auth.currentUser!.metadata.creationTime,
           'point': 0,
-          'rank': 'Ant',
+          'rank': 'Buggy',
         });
       });
     } on FirebaseAuthException catch (e) {
-      // this is solely for the Firebase Auth Exception
-      // for example : password did not match
-      // Get.snackbar("Error", e.message!);
       Get.snackbar(
         "Error",
         e.message!,
         snackPosition: SnackPosition.BOTTOM,
       );
     } catch (e) {
-      // this is temporary. you can handle different kinds of activities
-      //such as dialogue to indicate what's wrong
       Get.snackbar(
         "Error",
         e.toString(),
@@ -67,8 +62,6 @@ class AuthController extends GetxController {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      // this is solely for the Firebase Auth Exception
-      // for example : password did not match
       Get.snackbar(
         "Error",
         e.message!,

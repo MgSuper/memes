@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
 import 'package:memes/controllers/controllers.dart';
 import 'package:memes/models/models.dart';
 
 class FirestoreController extends GetxController {
-  //referance to firestore collection here laptop is collection name
   final CollectionReference _photosRef = firebaseFirestore.collection('memes');
   final CollectionReference _usersRef = firebaseFirestore.collection('users');
   final CollectionReference _updateUsersData =
@@ -14,8 +12,6 @@ class FirestoreController extends GetxController {
 
   var photoList = <Photo>[].obs;
   var userList = <UserModel>[].obs;
-
-  //dependency injection with getx
   final _chip = Get.find<ChipController>();
 
   @override
@@ -26,31 +22,34 @@ class FirestoreController extends GetxController {
     super.onInit();
   }
 
-// this fuction retuns stream of Memes from firestore
-
   Stream<List<Photo>> getPhotos(PhotoTypes brand) {
-    // using enum class PhotoType in switch case
     switch (brand) {
-      case PhotoTypes.ALL:
+      case PhotoTypes.All:
         Stream<QuerySnapshot> stream = _photosRef.snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
-      case PhotoTypes.MEMES:
+      case PhotoTypes.Memes:
         Stream<QuerySnapshot> stream =
             _photosRef.where('category', isEqualTo: 'Memes').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
-      case PhotoTypes.CARTOONS:
+      case PhotoTypes.Cartoons:
         Stream<QuerySnapshot> stream =
             _photosRef.where('category', isEqualTo: 'Cartoons').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
-      case PhotoTypes.CELEBRITIES:
+      case PhotoTypes.Gaming:
         Stream<QuerySnapshot> stream =
-            _photosRef.where('category', isEqualTo: 'Celebrities').snapshots();
+            _photosRef.where('category', isEqualTo: 'Gaming').snapshots();
+        return stream.map((snapshot) => snapshot.docs.map((snap) {
+              return Photo.fromSnapshot(snap);
+            }).toList());
+      case PhotoTypes.Programming:
+        Stream<QuerySnapshot> stream =
+            _photosRef.where('category', isEqualTo: 'Programming').snapshots();
         return stream.map((snapshot) => snapshot.docs.map((snap) {
               return Photo.fromSnapshot(snap);
             }).toList());
@@ -66,51 +65,101 @@ class FirestoreController extends GetxController {
   }
 
   void updatePointAndRank() async {
-    final _currentUser =
-        _updateUsersData.doc(FirebaseAuth.instance.currentUser?.uid);
-    firebaseFirestore
-        .runTransaction((transaction) async {
-          DocumentSnapshot snapshot = await transaction.get(_currentUser);
-          if (!snapshot.exists) {
-            throw Exception("User does not exist!");
-          }
-          int newPoints = (snapshot.data() as dynamic)['point'] + 1;
-          if (newPoints >= 0) {
-            transaction.update(_currentUser, {'rank': 'Ant'});
-          } else if (newPoints >= 50) {
-            transaction.update(_currentUser, {'rank': 'Butterfly'});
-          } else if (newPoints >= 150) {
-            transaction.update(_currentUser, {'rank': 'Bird'});
-          } else if (newPoints >= 300) {
-            transaction.update(_currentUser, {'rank': 'Cat'});
-          } else if (newPoints >= 500) {
-            transaction.update(_currentUser, {'rank': 'Dog'});
-          } else if (newPoints >= 800) {
-            transaction.update(_currentUser, {'rank': 'Bull Dog'});
-          } else if (newPoints >= 1500) {
-            transaction.update(_currentUser, {'rank': 'Tiger'});
-          } else if (newPoints >= 2500) {
-            transaction.update(_currentUser, {'rank': 'Hippo'});
-          } else if (newPoints >= 4000) {
-            transaction.update(_currentUser, {'rank': 'Lion'});
-          } else if (newPoints >= 6000) {
-            transaction.update(_currentUser, {'rank': 'Gorilla'});
-          } else if (newPoints >= 10000) {
-            transaction.update(_currentUser, {'rank': 'Elephants'});
-          } else if (newPoints >= 15000) {
-            transaction.update(_currentUser, {'rank': 'War Elephants'});
-          } else if (newPoints >= 20000) {
-            transaction.update(_currentUser, {'rank': 'Godzilla'});
-          }
-          transaction.update(_currentUser, {'point': newPoints});
-        })
-        .then(
-          (value) => Get.snackbar('Success', 'You got one point',
-              snackPosition: SnackPosition.BOTTOM),
-        )
-        .catchError(
-          (error) => Get.snackbar('Failed', 'No point is added',
-              snackPosition: SnackPosition.BOTTOM),
-        );
+    final _currentUser = _updateUsersData.doc(auth.currentUser?.uid);
+    firebaseFirestore.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(_currentUser);
+      if (!snapshot.exists) {
+        throw Exception("User does not exist!");
+      }
+      int updatedPoints = (snapshot.data() as dynamic)['point'] + 1;
+      if (updatedPoints > 0 && updatedPoints <= 50) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Buggy'});
+      } else if (updatedPoints > 50 && updatedPoints <= 100) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Ussop'});
+      } else if (updatedPoints > 100 && updatedPoints <= 200) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Chopper'});
+      } else if (updatedPoints > 200 && updatedPoints <= 300) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Nami'});
+      } else if (updatedPoints > 300 && updatedPoints <= 400) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Brook'});
+      } else if (updatedPoints > 400 && updatedPoints <= 500) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Franky'});
+      } else if (updatedPoints > 500 && updatedPoints <= 600) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Robin'});
+      } else if (updatedPoints > 600 && updatedPoints <= 700) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Moria'});
+      } else if (updatedPoints > 700 && updatedPoints <= 800) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Kuma'});
+      } else if (updatedPoints > 800 && updatedPoints <= 900) {
+        transaction.update(
+            _currentUser, {'point': updatedPoints, 'rank': 'Crocodile'});
+      } else if (updatedPoints > 900 && updatedPoints <= 1000) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Robin'});
+      } else if (updatedPoints > 1000 && updatedPoints <= 1200) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Mingo'});
+      } else if (updatedPoints > 1200 && updatedPoints <= 1400) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Yamato'});
+      } else if (updatedPoints > 1400 && updatedPoints <= 1600) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Jinbe'});
+      } else if (updatedPoints > 1600 && updatedPoints <= 1800) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Sanji'});
+      } else if (updatedPoints > 1800 && updatedPoints <= 2000) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Zoro'});
+      } else if (updatedPoints > 2000 && updatedPoints <= 2250) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Mihawk'});
+      } else if (updatedPoints > 2250 && updatedPoints <= 2500) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Kizaru'});
+      } else if (updatedPoints > 2500 && updatedPoints <= 2750) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Kuzan'});
+      } else if (updatedPoints > 2750 && updatedPoints <= 3000) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Akainu'});
+      } else if (updatedPoints > 3000 && updatedPoints <= 3250) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Big Mom'});
+      } else if (updatedPoints > 3250 && updatedPoints <= 3500) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Kaido'});
+      } else if (updatedPoints > 3500 && updatedPoints <= 3750) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Shank'});
+      } else if (updatedPoints > 3750 && updatedPoints <= 4000) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Sangoku'});
+      } else if (updatedPoints > 4000 && updatedPoints <= 4500) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Hancock'});
+      } else if (updatedPoints > 4500 && updatedPoints <= 5000) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Luffy'});
+      } else if (updatedPoints > 5000) {
+        transaction
+            .update(_currentUser, {'point': updatedPoints, 'rank': 'Garp'});
+      }
+    }).then((value) {
+      Get.snackbar('Success', 'You got a reward !',
+          snackPosition: SnackPosition.BOTTOM);
+    }).catchError(
+      (error) => Get.snackbar('Failed', 'No point is added',
+          snackPosition: SnackPosition.BOTTOM),
+    );
   }
 }

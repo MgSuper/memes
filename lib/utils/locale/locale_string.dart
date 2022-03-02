@@ -2,9 +2,7 @@ import 'package:get/get.dart';
 
 class LocaleString extends Translations {
   @override
-  // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
-        //ENGLISH LANGUAGE
         'en_US': {
           'welcome': 'WELCOME!',
           'sign_in_request': 'Enter email and password to Login ...',
@@ -16,23 +14,25 @@ class LocaleString extends Translations {
           'email_message': 'Invalid email.',
           'sign_in': 'Sign In',
           'no_account': 'Don\'t have an account ?',
+          'bio': 'Bio',
           'sign_up': 'Sign Up',
           'create_account': 'Create an account ...',
           'name': 'Name',
           'confirm_password': 'Confirm Password',
           'password_not_match-msg': 'Passwords does not match ...',
           'already_have_account': 'Already have an account?',
-          'point': 'Points',
+          'point': 'Reward',
           'rank': 'Rank',
           'ranks': 'Ranks',
           'profile': 'Profile',
           'home': 'Home',
           'leader_board': 'LEADERBOARD',
-          'get_point': 'Point',
-          'show_all': 'SHOW ALL',
-          'memes': 'MEMES',
-          'cartoons': 'CARTOONS',
-          'celebrities': 'CELEBRITIES',
+          'get_reward': 'Reward',
+          'show_all': 'Show All',
+          'memes': 'Memes',
+          'cartoons': 'Cartoons',
+          'gaming': 'Gaming',
+          'programming': 'Programming',
         },
         'my_MM': {
           'welcome': 'ကြိုဆိုပါတယ်',
@@ -45,6 +45,7 @@ class LocaleString extends Translations {
           'email_message': 'အီးလ်မေး မှားယွင်းနေပါသည်',
           'sign_in': 'ဝင်မည်',
           'no_account': 'အကောင့်မရှိသေးဘူးလား ?',
+          'bio': 'Bio',
           'sign_up': 'အသစ်လုပ်မည်',
           'create_account': 'အကောင့်သစ်ဖွင့်မည် ...',
           'name': 'နာမည်',
@@ -56,12 +57,13 @@ class LocaleString extends Translations {
           'ranks': 'အဆင့်များ',
           'profile': 'ကိုယ်ရေး အကျဉ်း',
           'home': 'ပင်မ စာမျက်နှာ',
-          'leader_board': 'အဆင့်',
-          'get_point': 'အမှတ်ယူရန်',
+          'leader_board': 'အဆင့်များ',
+          'get_reward': 'အမှတ်ယူရန်',
           'show_all': 'အကုန်ပြ',
           'memes': 'ဟာသများ',
           'cartoons': 'ကာတွန်းများ',
-          'celebrities': 'ဆယ်လီများ',
+          'gaming': 'ဂိမ်း ဟာသ',
+          'programming': 'Programming ဟာသ',
         }
       };
 }
