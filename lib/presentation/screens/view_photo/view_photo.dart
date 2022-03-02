@@ -26,7 +26,7 @@ class ViewPhoto extends StatelessWidget {
                       imageProvider: NetworkImage(Get.arguments['image'] ?? ''),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],
@@ -38,7 +38,7 @@ class ViewPhoto extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close,
                       color: Colors.white,
                     ),

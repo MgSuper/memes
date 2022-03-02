@@ -158,7 +158,7 @@ class FirestoreController extends GetxController {
       Get.snackbar('Success', 'You got a reward !',
           snackPosition: SnackPosition.BOTTOM);
     }).catchError(
-      (error) => Get.snackbar('Failed', 'No point is added',
+      (error) => Get.snackbar('Failed', 'No reward is added !',
           snackPosition: SnackPosition.BOTTOM),
     );
   }

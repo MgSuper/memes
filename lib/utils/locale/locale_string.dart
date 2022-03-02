@@ -26,7 +26,7 @@ class LocaleString extends Translations {
           'ranks': 'Ranks',
           'profile': 'Profile',
           'home': 'Home',
-          'leader_board': 'LEADERBOARD',
+          'leader_board': 'Leaderboard',
           'get_reward': 'Reward',
           'show_all': 'Show All',
           'memes': 'Memes',

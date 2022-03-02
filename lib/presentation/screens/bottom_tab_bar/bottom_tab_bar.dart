@@ -32,20 +32,12 @@ class _BottomTabBarState extends State<BottomTabBar> {
   void didChangeDependencies() {
     _loadBannerAd();
     super.didChangeDependencies();
-    // _adController.loadRewardedAd();
-    // _adController.loadBannerAd();
-
-    // _loadRewardedAd();
   }
 
   @override
   void dispose() {
     _bannerAd.dispose();
     super.dispose();
-
-    // _rewardedAd?.dispose();
-    // _adController.loadRewardedAd();
-    // _adController.loadBannerAd();
   }
 
   _loadBannerAd() {

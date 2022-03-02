@@ -10,11 +10,8 @@ import 'package:memes/presentation/screens/view_photo/view_photo.dart';
 
 class HomeScreen extends StatelessWidget {
   final _firestore = Get.find<FirestoreController>();
-
   final _chip = Get.find<ChipController>();
-
   final _ad = Get.find<AdController>();
-
   final _locale = Get.find<LocaleController>();
   final _ctrl = Get.find<HomeController>();
 
@@ -101,33 +98,33 @@ class HomeScreen extends StatelessWidget {
                           _firestore.photoList[_ad.getCorrectIndex(index)];
                       return InkWell(
                         onTap: () {
-                          // _ctrl.timer.value = 3;
-                          // _ctrl.runTimer();
-                          // Get.defaultDialog(
-                          //   title: 'Watch an Ad to get a reward !',
-                          //   content: Center(
-                          //     child: Obx(
-                          //       () => Text(
-                          //           'Video starting in ${_ctrl.timer.value}'),
-                          //     ),
-                          //   ),
-                          // ).then(
-                          //   (value) {
-                          // print(value);
-                          // if (value == null) {
-                          _ad.rewardedAd?.show(
-                            onUserEarnedReward:
-                                (RewardedAd ad, RewardItem reward) {
-                              _firestore.updatePointAndRank();
-                            },
+                          _ctrl.timer.value = 3;
+                          _ctrl.runTimer();
+                          Get.defaultDialog(
+                            title: 'Watch an Ad to get a reward !',
+                            content: Center(
+                              child: Obx(
+                                () => Text(
+                                    'Video starting in ${_ctrl.timer.value}'),
+                              ),
+                            ),
                           ).then(
-                            (value) => Get.to(() => ViewPhoto(),
-                                arguments: {'image': photo.imageUrl},
-                                transition: Transition.fadeIn),
+                            (value) {
+                              print(value);
+                              if (value == null) {
+                                _ad.rewardedAd?.show(
+                                  onUserEarnedReward:
+                                      (RewardedAd ad, RewardItem reward) {
+                                    _firestore.updatePointAndRank();
+                                  },
+                                ).then(
+                                  (value) => Get.to(() => ViewPhoto(),
+                                      arguments: {'image': photo.imageUrl},
+                                      transition: Transition.fadeIn),
+                                );
+                              }
+                            },
                           );
-                          // }
-                          // },
-                          // );
                         },
                         child: Stack(
                           fit: StackFit.expand,

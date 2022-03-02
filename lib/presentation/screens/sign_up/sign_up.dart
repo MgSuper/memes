@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:memes/constants/style.dart';
 import 'package:memes/controllers/controllers.dart';
 import 'package:memes/presentation/widgets/widgets.dart';
-import 'package:memes/utils/theme/theme.dart';
 import 'package:sizer/sizer.dart';
 import 'localWidgets/sign_up_buttons.dart';
 import 'package:get/get.dart';
@@ -22,7 +21,6 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _passwordController = TextEditingController();
 
   final LocaleController _locale = Get.find();
-  final ThemeController _theme = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +30,6 @@ class _SignUpState extends State<SignUp> {
         automaticallyImplyLeading: false,
         actions: [
           LanguageMenu(),
-          IconButton(
-            onPressed: () {
-              print(Get.isDarkMode);
-              if (Get.isDarkMode) {
-                // themeController.changeThemeMode(ThemeMode.light);
-                _theme.changeTheme(Themes.lightTheme);
-                _theme.saveTheme(false);
-              } else {
-                // themeController.changeThemeMode(ThemeMode.dark);
-                _theme.changeTheme(Themes.darkTheme);
-                _theme.saveTheme(true);
-              }
-            },
-            icon: Obx(
-              () => _theme.isDark == true
-                  ? const Icon(Icons.dark_mode_outlined)
-                  : const Icon(Icons.light_mode_outlined),
-            ),
-          ),
         ],
         elevation: 0,
       ),
@@ -60,7 +39,7 @@ class _SignUpState extends State<SignUp> {
           padding: EdgeInsets.symmetric(horizontal: 5.0.h),
           child: Column(
             children: [
-              Expanded(
+              const Expanded(
                 flex: 6,
                 child: Image(
                   image: AssetImage('assets/images/show_signup_to_user.png'),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/constants/firebase_constant.dart';
 import 'package:memes/controllerBindings.dart';
 import 'package:memes/controllers/controllers.dart';
@@ -18,14 +17,12 @@ void main() async {
   await firebaseInitialization.then((value) async {
     Get.put(AuthController());
     Get.put(LocaleController());
-    Get.put(ThemeController());
   });
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   final LocaleController _locale = Get.find();
-  final ThemeController _theme = Get.find();
 
   MyApp({Key? key}) : super(key: key);
 
@@ -41,9 +38,7 @@ class MyApp extends StatelessWidget {
               : const Locale('en', 'US'),
           fallbackLocale: const Locale('en', 'US'),
           debugShowCheckedModeBanner: false,
-          themeMode: _theme.theme,
           theme: Themes.lightTheme,
-          darkTheme: Themes.darkTheme,
           home: SplashScreen(),
         );
       },

@@ -6,8 +6,8 @@ class LanguageMenu extends GetView<LocaleController> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: Icon(Icons.language),
-      offset: Offset(0, 35),
+      icon: const Icon(Icons.language),
+      offset: const Offset(0, 35),
       itemBuilder: (context) => controller.optionsLocales.entries.map((item) {
         return PopupMenuItem(
           value: item.key,

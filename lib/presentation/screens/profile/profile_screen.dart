@@ -1,16 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:memes/constants/firebase_constant.dart';
-import 'package:memes/constants/style.dart';
-import 'package:memes/constants/theme_locale.constant.dart';
 import 'package:memes/controllers/controllers.dart';
-import 'package:memes/controllers/theme_controller.dart';
-import 'package:memes/utils/theme/theme.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final ThemeController _theme = Get.find();
   final _locale = Get.find<LocaleController>();
   final _firestore = Get.find<FirestoreController>();
   final _auth = Get.find<AuthController>();
@@ -115,33 +109,6 @@ class ProfileScreen extends StatelessWidget {
                                 _locale.updateLocale(newValue);
                               },
                             )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Theme',
-                              style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.02),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                if (Get.isDarkMode) {
-                                  _theme.changeTheme(Themes.lightTheme);
-                                  _theme.saveTheme(false);
-                                } else {
-                                  _theme.changeTheme(Themes.darkTheme);
-                                  _theme.saveTheme(true);
-                                }
-                              },
-                              icon: Obx(
-                                () => _theme.isDark == true
-                                    ? const Icon(Icons.dark_mode_outlined)
-                                    : const Icon(Icons.light_mode_outlined),
-                              ),
-                            ),
                           ],
                         ),
                       ],
