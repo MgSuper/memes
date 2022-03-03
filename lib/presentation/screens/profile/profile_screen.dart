@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
 import 'package:memes/controllers/controllers.dart';
 import 'package:memes/presentation/widgets/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 class ProfileScreen extends StatelessWidget {
   final _locale = Get.find<LocaleController>();
@@ -53,6 +54,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         Text(
                           _firestore.userList[index].name,
+                          style: TextStyle(fontSize: 6.0.w),
                         ),
                         SizedBox(
                           height: 24.0,

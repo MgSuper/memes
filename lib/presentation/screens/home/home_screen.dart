@@ -136,11 +136,9 @@ class HomeScreen extends StatelessWidget {
                               },
                             );
                           } else {
-                            Get.snackbar(
-                              "Sorry",
-                              "You have reached the click limit for this day. Please come back later.",
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
+                            Get.to(() => ViewPhoto(),
+                                arguments: {'image': photo.imageUrl},
+                                transition: Transition.fadeIn);
                           }
                         },
                         child: Stack(
