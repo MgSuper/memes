@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
         children: [
           Center(
             child: Image(
-              image: AssetImage('assets/images/let_laugh.png'),
+              image: AssetImage('assets/images/meme.jpeg'),
               width: 125,
               height: 125,
             ),
