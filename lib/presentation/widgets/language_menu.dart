@@ -11,7 +11,10 @@ class LanguageMenu extends GetView<LocaleController> {
       itemBuilder: (context) => controller.optionsLocales.entries.map((item) {
         return PopupMenuItem(
           value: item.key,
-          child: Text(item.value['description']),
+          child: Text(
+            item.value['description'],
+            style: TextStyle(color: Colors.black),
+          ),
         );
       }).toList(),
       onSelected: (String newValue) {

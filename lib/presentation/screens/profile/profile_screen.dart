@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:memes/constants/firebase_constant.dart';
 import 'package:memes/controllers/controllers.dart';
+import 'package:memes/presentation/widgets/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   final _locale = Get.find<LocaleController>();
@@ -91,24 +92,9 @@ class ProfileScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Language',
+                              'language'.tr,
                             ),
-                            PopupMenuButton(
-                              padding: EdgeInsets.zero,
-                              icon: Icon(Icons.language),
-                              offset: Offset(0, 35),
-                              itemBuilder: (context) =>
-                                  _locale.optionsLocales.entries.map((item) {
-                                return PopupMenuItem(
-                                  value: item.key,
-                                  child: Text(item.value['description']),
-                                );
-                              }).toList(),
-                              onSelected: (String newValue) {
-                                print('new value ${newValue}');
-                                _locale.updateLocale(newValue);
-                              },
-                            )
+                            LanguageMenu(),
                           ],
                         ),
                       ],

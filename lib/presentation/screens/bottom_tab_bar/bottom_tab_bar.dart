@@ -83,9 +83,9 @@ class _BottomTabBarState extends State<BottomTabBar> {
             // ),
           ],
           floatingActionButton: Obx(
-            () => FloatingActionButton.extended(
-              onPressed: _ad.isRewardedAdReady.value
-                  ? () {
+            () => _ad.isRewardedAdReady.value == true
+                ? FloatingActionButton.extended(
+                    onPressed: () {
                       Get.defaultDialog(
                         title: 'Reward Ad',
                         titleStyle: const TextStyle(color: Colors.teal),
@@ -107,15 +107,16 @@ class _BottomTabBarState extends State<BottomTabBar> {
                         },
                         onCancel: () {},
                       );
-                    }
-                  : null,
-              label: Text(
-                'get_reward'.tr,
-                style:
-                    _locale.getLocale() == 'MM' ? kMyanmarFont : kEnglishFont,
-              ),
-              icon: Icon(Icons.card_giftcard, size: 18),
-            ),
+                    },
+                    label: Text(
+                      'get_reward'.tr,
+                      style: _locale.getLocale() == 'MM'
+                          ? kMyanmarFont
+                          : kEnglishFont,
+                    ),
+                    icon: Icon(Icons.card_giftcard, size: 18),
+                  )
+                : SizedBox(),
           ),
           body: SafeArea(
             child: IndexedStack(

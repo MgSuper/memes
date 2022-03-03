@@ -98,14 +98,21 @@ class HomeScreen extends StatelessWidget {
                           _firestore.photoList[_ad.getCorrectIndex(index)];
                       return InkWell(
                         onTap: () {
-                          _ctrl.timer.value = 3;
+                          _ad.isRewardedAdReady.value == false
+                              ? Get.to(() => ViewPhoto(),
+                                  arguments: {'image': photo.imageUrl},
+                                  transition: Transition.fadeIn)
+                              : _ctrl.timer.value = 3;
                           _ctrl.runTimer();
                           Get.defaultDialog(
                             title: 'Watch an Ad to get a reward !',
+                            titleStyle: const TextStyle(color: Colors.black),
                             content: Center(
                               child: Obx(
                                 () => Text(
-                                    'Video starting in ${_ctrl.timer.value}'),
+                                  'Video starting in ${_ctrl.timer.value}',
+                                  style: TextStyle(color: Colors.teal),
+                                ),
                               ),
                             ),
                           ).then(
