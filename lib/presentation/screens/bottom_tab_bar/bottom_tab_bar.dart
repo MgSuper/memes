@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:memes/constants/style.dart';
+import 'package:memes/controllers/click_controller.dart';
 import 'package:memes/controllers/controllers.dart';
 import 'package:memes/presentation/screens/home/home_screen.dart';
 import 'package:memes/presentation/screens/profile/profile_screen.dart';
@@ -17,6 +18,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   final _firestore = Get.find<FirestoreController>();
   final _ad = Get.find<AdController>();
   final _locale = Get.find<LocaleController>();
+  final _clickCtrl = Get.find<ClickController>();
 
   late BannerAd _bannerAd;
   bool _isAdLoaded = false;
@@ -97,13 +99,21 @@ class _BottomTabBarState extends State<BottomTabBar> {
                         confirmTextColor: Colors.white,
                         buttonColor: Colors.teal,
                         onConfirm: () {
-                          _ad.rewardedAd?.show(
-                            onUserEarnedReward:
-                                (RewardedAd ad, RewardItem reward) {
-                              _firestore.updatePointAndRank();
-                              Get.back();
-                            },
-                          );
+                          if (_clickCtrl.checkClickedCount()) {
+                            _ad.rewardedAd?.show(
+                              onUserEarnedReward:
+                                  (RewardedAd ad, RewardItem reward) {
+                                _firestore.updatePointAndRank();
+                                Get.back();
+                              },
+                            );
+                          } else {
+                            Get.snackbar(
+                              "Sorry",
+                              "You have reached the click limit for this day. Please come back later.",
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
                         },
                         onCancel: () {},
                       );

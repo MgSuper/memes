@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:memes/constants/style.dart';
+import 'package:memes/controllers/click_controller.dart';
 import 'package:memes/controllers/controllers.dart';
 import 'package:memes/models/models.dart';
 import 'package:memes/presentation/screens/home/home_controller.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   final _ad = Get.find<AdController>();
   final _locale = Get.find<LocaleController>();
   final _ctrl = Get.find<HomeController>();
+  final _clickCtrl = Get.find<ClickController>();
 
   final List<String> _chipLabel = [
     'show_all',
@@ -98,40 +100,48 @@ class HomeScreen extends StatelessWidget {
                           _firestore.photoList[_ad.getCorrectIndex(index)];
                       return InkWell(
                         onTap: () {
-                          _ad.isRewardedAdReady.value == false
-                              ? Get.to(() => ViewPhoto(),
-                                  arguments: {'image': photo.imageUrl},
-                                  transition: Transition.fadeIn)
-                              : _ctrl.timer.value = 3;
-                          _ctrl.runTimer();
-                          Get.defaultDialog(
-                            title: 'Watch an Ad to get a reward !',
-                            titleStyle: const TextStyle(color: Colors.black),
-                            content: Center(
-                              child: Obx(
-                                () => Text(
-                                  'Video starting in ${_ctrl.timer.value}',
-                                  style: TextStyle(color: Colors.teal),
+                          if (_clickCtrl.checkClickedCount()) {
+                            _ad.isRewardedAdReady.value == false
+                                ? Get.to(() => ViewPhoto(),
+                                    arguments: {'image': photo.imageUrl},
+                                    transition: Transition.fadeIn)
+                                : _ctrl.timer.value = 3;
+                            _ctrl.runTimer();
+                            Get.defaultDialog(
+                              title: 'Watch an Ad to get a reward !',
+                              titleStyle: const TextStyle(color: Colors.black),
+                              content: Center(
+                                child: Obx(
+                                  () => Text(
+                                    'Video starting in ${_ctrl.timer.value}',
+                                    style: TextStyle(color: Colors.teal),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ).then(
-                            (value) {
-                              print(value);
-                              if (value == null) {
-                                _ad.rewardedAd?.show(
-                                  onUserEarnedReward:
-                                      (RewardedAd ad, RewardItem reward) {
-                                    _firestore.updatePointAndRank();
-                                  },
-                                ).then(
-                                  (value) => Get.to(() => ViewPhoto(),
-                                      arguments: {'image': photo.imageUrl},
-                                      transition: Transition.fadeIn),
-                                );
-                              }
-                            },
-                          );
+                            ).then(
+                              (value) {
+                                print(value);
+                                if (value == null) {
+                                  _ad.rewardedAd?.show(
+                                    onUserEarnedReward:
+                                        (RewardedAd ad, RewardItem reward) {
+                                      _firestore.updatePointAndRank();
+                                    },
+                                  ).then(
+                                    (value) => Get.to(() => ViewPhoto(),
+                                        arguments: {'image': photo.imageUrl},
+                                        transition: Transition.fadeIn),
+                                  );
+                                }
+                              },
+                            );
+                          } else {
+                            Get.snackbar(
+                              "Sorry",
+                              "You have reached the click limit for this day. Please come back later.",
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
                         },
                         child: Stack(
                           fit: StackFit.expand,
