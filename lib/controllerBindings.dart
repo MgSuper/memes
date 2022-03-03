@@ -13,7 +13,5 @@ class ControllerBindings extends Bindings {
     Get.put<UserRanksController>(UserRanksController());
     Get.put<ChipController>(ChipController());
     Get.put<FirestoreController>(FirestoreController());
-    Get.put<AdController>(AdController());
-    Get.put<ClickController>(ClickController());
   }
 }
