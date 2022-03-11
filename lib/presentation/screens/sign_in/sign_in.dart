@@ -10,7 +10,7 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           LanguageMenu(),
@@ -23,10 +23,9 @@ class SignIn extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex: 4,
+              flex: 3,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height * 0.02),
+                padding: EdgeInsets.symmetric(vertical: 2.0.w),
                 child: const Image(
                   image: AssetImage('assets/images/show_login_to_user.png'),
                 ),

@@ -50,14 +50,14 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 15.0,
+                          height: 3.0.h,
                         ),
                         Text(
                           _firestore.userList[index].name,
                           style: TextStyle(fontSize: 6.0.w),
                         ),
                         SizedBox(
-                          height: 24.0,
+                          height: 3.0.h,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16.0),
@@ -76,10 +76,10 @@ class ProfileScreen extends StatelessWidget {
                                 height: 0.0,
                               )
                             : SizedBox(
-                                height: 14.0,
+                                height: 2.0.h,
                               ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
+                          padding: EdgeInsets.only(right: 4.0.w),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

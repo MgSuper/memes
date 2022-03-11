@@ -39,6 +39,7 @@ class SignInButtons extends StatelessWidget {
               }
             },
           ),
+          SizedBox(height: 3.0.h),
           TextWithTextButton(
             text: 'no_account'.tr,
             textButtonText: 'sign_up'.tr,

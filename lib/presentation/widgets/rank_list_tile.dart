@@ -7,6 +7,7 @@ class RankListTile extends StatelessWidget {
   String trailing;
   Color? rank_color;
   double? radius;
+  bool isMe;
   RankListTile({
     required this.title,
     required this.sub_title,
@@ -14,12 +15,13 @@ class RankListTile extends StatelessWidget {
     required this.trailing,
     this.rank_color,
     required this.radius,
+    this.isMe = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
+      title: isMe == true ? Text('${title} ( You )') : Text(title),
       subtitle: Text(sub_title),
       leading: CircleAvatar(
         radius: 22.0,

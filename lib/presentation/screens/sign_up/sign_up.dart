@@ -25,7 +25,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
@@ -40,7 +40,7 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             children: [
               const Expanded(
-                flex: 6,
+                flex: 5,
                 child: Image(
                   image: AssetImage('assets/images/show_signup_to_user.png'),
                 ),
@@ -106,7 +106,7 @@ class _SignUpState extends State<SignUp> {
               return null;
             },
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+          SizedBox(height: 3.0.h),
           SignUpButtons(
             formKey: _formKey,
             nameController: _nameController,
