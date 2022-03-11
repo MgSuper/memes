@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Obx(
               () => SizedBox(
-                height: 7.0.h,
+                height: 6.0.h,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -179,7 +179,7 @@ class HomeScreen extends StatelessWidget {
                                       photo.category,
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 3.0.w,
+                                        fontSize: 2.5.w,
                                       ),
                                     ),
                                   ],
